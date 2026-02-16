@@ -43,7 +43,7 @@ function App() {
     try {
       const newConv = await api.createConversation();
       setConversations([
-        { id: newConv.id, created_at: newConv.created_at, message_count: 0 },
+        { id: newConv.id, title: newConv.title, created_at: newConv.created_at, message_count: 0 },
         ...conversations,
       ]);
       setCurrentConversationId(newConv.id);
@@ -167,7 +167,7 @@ function App() {
       console.error('Failed to send message:', error);
       setCurrentConversation((prev) => ({
         ...prev,
-        messages: prev.messages.slice(0, -2),
+        messages: prev.messages.slice(0, -1),
       }));
       setIsLoading(false);
     }
