@@ -9,13 +9,12 @@ function App() {
   const [currentConversationId, setCurrentConversationId] = useState(null);
   const [currentConversation, setCurrentConversation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Load conversations on mount
   useEffect(() => {
     loadConversations();
   }, []);
 
-  // Load conversation details when selected
   useEffect(() => {
     if (currentConversationId) {
       loadConversation(currentConversationId);
@@ -62,14 +61,12 @@ function App() {
 
     setIsLoading(true);
     try {
-      // Optimistically add user message to UI
       const userMessage = { role: 'user', content };
       setCurrentConversation((prev) => ({
         ...prev,
         messages: [...prev.messages, userMessage],
       }));
 
-      // Create a partial assistant message that will be updated progressively
       const assistantMessage = {
         role: 'assistant',
         stage1: null,
@@ -83,13 +80,11 @@ function App() {
         },
       };
 
-      // Add the partial assistant message
       setCurrentConversation((prev) => ({
         ...prev,
         messages: [...prev.messages, assistantMessage],
       }));
 
-      // Send message with streaming
       await api.sendMessageStream(currentConversationId, content, (eventType, event) => {
         switch (eventType) {
           case 'stage1_start':
@@ -151,12 +146,10 @@ function App() {
             break;
 
           case 'title_complete':
-            // Reload conversations to get updated title
             loadConversations();
             break;
 
           case 'complete':
-            // Stream complete, reload conversations list
             loadConversations();
             setIsLoading(false);
             break;
@@ -172,7 +165,6 @@ function App() {
       });
     } catch (error) {
       console.error('Failed to send message:', error);
-      // Remove optimistic messages on error
       setCurrentConversation((prev) => ({
         ...prev,
         messages: prev.messages.slice(0, -2),
@@ -188,11 +180,15 @@ function App() {
         currentConversationId={currentConversationId}
         onSelectConversation={handleSelectConversation}
         onNewConversation={handleNewConversation}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
       <ChatInterface
         conversation={currentConversation}
         onSendMessage={handleSendMessage}
         isLoading={isLoading}
+        onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        sidebarOpen={sidebarOpen}
       />
     </div>
   );

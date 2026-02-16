@@ -11,7 +11,10 @@ export default function Stage1({ responses }) {
 
   return (
     <div className="stage stage1">
-      <h3 className="stage-title">Stage 1: Individual Responses</h3>
+      <div className="stage-header">
+        <div className="stage-badge stage1-badge">1</div>
+        <h3 className="stage-title">Individual Responses</h3>
+      </div>
 
       <div className="tabs">
         {responses.map((resp, index) => (
