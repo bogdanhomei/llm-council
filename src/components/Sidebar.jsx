@@ -6,6 +6,8 @@ export default function Sidebar({
   onSelectConversation,
   onNewConversation,
   isOpen,
+  currentPage,
+  onNavigate,
 }) {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
@@ -27,6 +29,32 @@ export default function Sidebar({
         </button>
       </div>
 
+      <nav className="sidebar-nav">
+        <button
+          className={`sidebar-nav-item ${currentPage === 'chat' ? 'active' : ''}`}
+          onClick={() => onNavigate('chat')}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          Chat
+        </button>
+        <button
+          className={`sidebar-nav-item ${currentPage === 'about' ? 'active' : ''}`}
+          onClick={() => onNavigate('about')}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          About
+        </button>
+      </nav>
+
+      <div className="sidebar-divider" />
+
+      <div className="conversation-list-header">Conversations</div>
       <div className="conversation-list">
         {conversations.length === 0 ? (
           <div className="no-conversations">
@@ -40,7 +68,7 @@ export default function Sidebar({
             <button
               key={conv.id}
               className={`conversation-item ${
-                conv.id === currentConversationId ? 'active' : ''
+                conv.id === currentConversationId && currentPage === 'chat' ? 'active' : ''
               }`}
               onClick={() => onSelectConversation(conv.id)}
             >

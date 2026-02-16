@@ -8,6 +8,34 @@
   font-family: var(--font-family);
 }
 
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-width: 0;
+  background: var(--bg-warm);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 28px;
+  background: var(--bg-warm-lighter);
+  min-height: 64px;
+  box-shadow:
+    0 4px 12px rgba(166, 152, 136, 0.1),
+    inset 0 -1px 0 rgba(166, 152, 136, 0.08);
+}
+
+.page-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-neutral-800);
+  letter-spacing: -0.02em;
+}
+
 @media (max-width: 768px) {
   .app {
     flex-direction: column;

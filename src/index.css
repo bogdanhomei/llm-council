@@ -189,3 +189,30 @@ body {
   text-decoration: underline;
   color: var(--color-primary-700);
 }
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--bg-warm);
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-spring);
+  flex-shrink: 0;
+  box-shadow: var(--clay-shadow-sm);
+}
+
+.menu-btn:hover {
+  color: var(--color-neutral-700);
+  transform: translateY(-1px);
+  box-shadow: var(--clay-shadow);
+}
+
+.menu-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--clay-shadow-pressed);
+}
